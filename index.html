@@ -1,19 +1,73 @@
 <!doctype html>
 
 <head>
-	<meta charset="utf-8">
-	<script>
-		// TODO: create a handler
+    <meta charset="utf-8">
+    <script>
+
+        function setSearchEngine () {
+            let actions = {
+                "google": "https://www.google.com/search",
+                "duckDuckGo": "https://duckduckgo.com",
+                "bing": "https://wwww.bing.com/search",
+                "ask": "https://www.ask.com/web"
+            }
+            let form = document.getElementById('searchForm');
+            let buttonSelected = document.querySelector("input[name = engine]:checked");
+
+            let query = document.getElementById("q");
+
+            let errorBox = document.getElementById("errorBox");
+            let errorMsg = document.getElementById("errorMsg");
+
+            if (!buttonSelected) {
+                errorBox.style.visibility = "visible";
+                errorMsg.style.visiibility = "visible";
+                errorMsg.innerHTML = "Ok buddy, what your gonna wanna do here, is take the third left after the gas station, and pick a search engine to use.";
+                event.preventDefault();
+
+            }
+
+            else if (query.value === "") {
+                errorBox.style.visibility = "visible";
+                errorMsg.style.visibility = "visible";
+                errorMsg.innerHTML = "Eek, honey, no. You need to enter something to search for.";
+                event.preventDefault();
+
+            } else {
+                errorBox.style.visibility = "hidden";
+                errorMsg.style.visibility = "hidden";
+            }
+
+            let url = actions[buttonSelected.value];
+            form.action = url;
+        }
+
     window.addEventListener("load", function(){
-        // TODO: register the handler      TESTING
+        let form = document.getElementById("searchForm");
+        form.addEventListener("submit", setSearchEngine);
+
     });
-	</script>
+
+    </script>
 </head>
 
 <body>
 
-	<form id="searchForm">
-    <!-- TODO: add form elements -->
-	</form>
+    <header>Pick a Search Engine, Unlock Its Mighty Powers, and Search Everything!</header>
+
+    <div class ="searchBar">
+        <p class = "searchHeader">Enter That Which You Seek, and Choose Your Engine Wisely:</p>
+        <form id="searchForm" target = "_blank">
+            <input type="text" class="q" id="q" name="q" /><br>
+            <label><input type="radio" name="engine" value="google"/>Google</label>
+            <label><input type="radio" name="engine" value="duckDuckGo"/>DuckDuckGo</label>
+            <label><input type="radio" name="engine" value="bing"/>Bing</label>
+            <label><input type="radio" name="engine" value="ask"/>Ask</label>
+            <button id="submit" value="Go!">Go!</button> 
+        </form>
+
+        <div class = "errorBox" id = "errorBox">
+    </div>
+</div>
 
 </body>
